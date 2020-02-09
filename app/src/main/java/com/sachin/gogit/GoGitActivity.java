@@ -4,9 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import com.sachin.gogit.ui.main.GoGitFragment;
+import com.sachin.gogit.ui.main.GoGitRepositoryFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class GoGitActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main_activity);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, GoGitFragment.newInstance())
+                    .replace(R.id.container, GoGitRepositoryFragment.newInstance())
                     .commitNow();
         }
     }

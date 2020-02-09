@@ -13,13 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sachin.gogit.R;
+import com.sachin.gogit.base.GoGitBaseFragment;
 
-public class GoGitFragment extends Fragment {
+public class GoGitRepositoryFragment extends GoGitBaseFragment {
 
     private GoGitRepositoryViewModel mViewModel;
 
-    public static GoGitFragment newInstance() {
-        return new GoGitFragment();
+    public static GoGitRepositoryFragment newInstance() {
+        return new GoGitRepositoryFragment();
     }
 
     @Nullable
@@ -36,4 +37,18 @@ public class GoGitFragment extends Fragment {
         // TODO: Use the ViewModel
     }
 
+    @Override
+    public boolean handleNetworkState() {
+        return true;
+    }
+
+    @Override
+    public void onNetworkDisConnected() {
+
+    }
+
+    @Override
+    public void onNetworkConnected() {
+
+    }
 }
