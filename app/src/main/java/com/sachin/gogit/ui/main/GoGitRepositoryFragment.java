@@ -16,12 +16,13 @@ import android.view.ViewGroup;
 import com.sachin.gogit.GoGitApplication;
 import com.sachin.gogit.R;
 import com.sachin.gogit.base.GoGitBaseFragment;
+import com.sachin.gogit.base.ViewModelFactory;
 
 import javax.inject.Inject;
 
 public class GoGitRepositoryFragment extends GoGitBaseFragment {
     @Inject
-    ViewModelProvider.Factory viewModelFactory;
+    ViewModelFactory viewModelFactory;
     private GoGitRepositoryViewModel mViewModel;
 
     public static GoGitRepositoryFragment newInstance() {

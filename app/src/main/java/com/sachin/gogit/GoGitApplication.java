@@ -6,6 +6,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.MemoryCategory;
 import com.sachin.gogit.dagger.components.DaggerGoGitApplicationComponent;
 import com.sachin.gogit.dagger.components.GoGitApplicationComponent;
+import com.sachin.gogit.dagger.modules.GoGitCacheModule;
+import com.sachin.gogit.dagger.modules.GoGitDataProviderModule;
 import com.sachin.gogit.dagger.modules.NetworkModule;
 import com.sachin.gogit.dagger.modules.RealmDatabaseModule;
 import com.sachin.gogit.dagger.modules.SharedPreferenceModule;
@@ -26,6 +28,8 @@ public class GoGitApplication extends Application {
                 .networkModule(new NetworkModule())
                 .realmDatabaseModule(new RealmDatabaseModule(getBaseContext()))
                 .sharedPreferenceModule(new SharedPreferenceModule(getBaseContext()))
+                .goGitCacheModule(new GoGitCacheModule())
+                .goGitDataProviderModule(new GoGitDataProviderModule())
                 .build();
         context = this;
     }
