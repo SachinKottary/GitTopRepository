@@ -14,12 +14,12 @@ import android.view.ViewGroup;
 
 import com.sachin.gogit.R;
 
-public class MainFragment extends Fragment {
+public class GoGitFragment extends Fragment {
 
-    private MainViewModel mViewModel;
+    private GoGitRepositoryViewModel mViewModel;
 
-    public static MainFragment newInstance() {
-        return new MainFragment();
+    public static GoGitFragment newInstance() {
+        return new GoGitFragment();
     }
 
     @Nullable
@@ -32,7 +32,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(GoGitRepositoryViewModel.class);
         // TODO: Use the ViewModel
     }
 
