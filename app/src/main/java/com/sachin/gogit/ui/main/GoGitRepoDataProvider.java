@@ -1,5 +1,6 @@
 package com.sachin.gogit.ui.main;
 
+import androidx.databinding.ObservableBoolean;
 import androidx.lifecycle.MutableLiveData;
 
 import com.sachin.gogit.GoGitApplication;
@@ -24,7 +25,7 @@ public class GoGitRepoDataProvider {
     private GoGitAppPreferenceManager appPreferenceManager;
     private GoGitCacheHandler cacheHandler;
 
-    public MutableLiveData<Boolean> isDataLoading = new MutableLiveData<>();
+    public ObservableBoolean isDataLoading = new ObservableBoolean();
     public MutableLiveData<List<GitTopRepositoryDetails>> gitRepoListLiveData = new MutableLiveData<>();
     public MutableLiveData<String> gitRepoListErrorLiveData = new MutableLiveData<>();
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
@@ -43,7 +44,7 @@ public class GoGitRepoDataProvider {
         //If there is no cached data or if cache time expired, then download new data from server
         if (gitCachedDetailList == null || gitCachedDetailList.isEmpty() || cacheHandler.isCacheTimeExpired()) {
             GoGitApplication.getApplication().clearGlideCacheMemory();
-            downloadTopGitRepoFromServer();
+            downloadTopGitRepoFromServer(false);
         } else {
             loadGitTopRepoDetails(gitCachedDetailList);
             setupTimerForCacheExpire();
@@ -62,7 +63,8 @@ public class GoGitRepoDataProvider {
     /**
      * This method downloads top git repo details from the server
      */
-    public void downloadTopGitRepoFromServer() {
+    public void downloadTopGitRepoFromServer(boolean isSwipeRefresh) {
+        isDataLoading.set(isSwipeRefresh);
         goGitNetworkManager.getGitTopRepoDetails()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -88,7 +90,7 @@ public class GoGitRepoDataProvider {
         compositeDisposable.add(cacheHandler.getTimerObservableForCacheExpiry()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(this::downloadTopGitRepoFromServer));
+                .subscribe(() -> downloadTopGitRepoFromServer(true)));
     }
 
     public void onClear() {
@@ -106,6 +108,8 @@ public class GoGitRepoDataProvider {
         @Override
         public void onNext(List<GitTopRepositoryDetails> detailsList) {
             updateGitRepoDetailsInDataBase(detailsList);
+            isDataLoading.set(false);
+            if (detailsList == null || detailsList.isEmpty()) return;
             //Notify view about the new data
             gitRepoListLiveData.setValue(detailsList);
             //Save the time in preference to check for cache expire
@@ -114,14 +118,14 @@ public class GoGitRepoDataProvider {
 
         @Override
         public void onError(Throwable e) {
-            isDataLoading.setValue(false);
+            isDataLoading.set(false);
             //Notify view about the new data
-            gitRepoListLiveData.setValue(null);
+            gitRepoListErrorLiveData.setValue(null);
         }
 
         @Override
         public void onComplete() {
-            isDataLoading.setValue(false);
+            isDataLoading.set(false);
         }
     };
 

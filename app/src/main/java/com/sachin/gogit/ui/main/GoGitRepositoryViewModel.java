@@ -1,5 +1,6 @@
 package com.sachin.gogit.ui.main;
 
+import androidx.databinding.ObservableBoolean;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -12,9 +13,11 @@ import javax.inject.Inject;
 public class GoGitRepositoryViewModel extends ViewModel {
 
     private GoGitRepoDataProvider goGitRepoDataProvider;
-    public MutableLiveData<Boolean> isDataLoading;
+    public ObservableBoolean isDataLoading;
     public MutableLiveData<List<GitTopRepositoryDetails>> gitRepoListLiveData;
     public MutableLiveData<String> gitRepoListErrorLiveData;
+
+    public GoGitRepositoryViewModel() {}
 
     @Inject
     public GoGitRepositoryViewModel(GoGitRepoDataProvider dataProvider) {
@@ -38,8 +41,11 @@ public class GoGitRepositoryViewModel extends ViewModel {
     }
 
     public void onSwipeRefresh() {
-        isDataLoading.setValue(true);
-        goGitRepoDataProvider.downloadTopGitRepoFromServer();
+        downloadTopGitRepoFromServer(true);
+    }
+
+    public void downloadTopGitRepoFromServer(boolean isSwipeRefresh) {
+        goGitRepoDataProvider.downloadTopGitRepoFromServer(isSwipeRefresh);
     }
 
 }

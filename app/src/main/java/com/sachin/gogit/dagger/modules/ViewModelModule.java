@@ -37,8 +37,7 @@ public class ViewModelModule {
     @Provides
     @IntoMap
     @ViewModelKey(GoGitRepositoryViewModel.class)
-    ViewModel viewModel1(GoGitRepoDataProvider dataProvider) {
-        return new GoGitRepositoryViewModel(dataProvider);
+    ViewModel viewModel1(GoGitRepoDataProvider fetchDataUseCase1) {
+        return new GoGitRepositoryViewModel(fetchDataUseCase1);
     }
-
 }

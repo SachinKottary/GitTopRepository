@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="android.text.TextUtils" />
+
+        <import type="android.graphics.Color" />
+
+        <variable
+            name="gitDetails"
+            type="com.sachin.gogit.network.dto.GitTopRepositoryDetails" />
+
+        <variable
+            name="clickListener"
+            type="com.sachin.gogit.interfaces.GoGitRepoDetailClickListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{(v) -> clickListener.onGitRepoDetailClicked(v, gitDetails)}">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:foreground="?attr/selectableItemBackground"
+            android:minHeight="80dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/avatar_image"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="10dp"
+                    android:contentDescription="@null"
+                    app:avatarImage="@{gitDetails.avatar}"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/author"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@{gitDetails.author}"
+                    android:textSize="13sp"
+                    app:layout_constraintLeft_toRightOf="@+id/avatar_image"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="@{gitDetails.name}"
+                    android:textSize="15sp"
+                    app:layout_constraintLeft_toRightOf="@+id/avatar_image"
+                    app:layout_constraintTop_toBottomOf="@+id/author" />
+
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:ellipsize="end"
+                    android:maxLines="3"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:paddingEnd="80dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="@{gitDetails.description}"
+                    android:textSize="13sp"
+                    android:visibility="@{gitDetails.expanded ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintLeft_toRightOf="@+id/avatar_image"
+                    app:layout_constraintTop_toBottomOf="@+id/name" />
+
+                <LinearLayout
+                    android:id="@+id/description_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="80dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingBottom="10dp"
+                    android:visibility="@{gitDetails.expanded ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/description">
+
+                    <ImageView
+                        android:id="@+id/language_color_image"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:contentDescription="@null"
+                        android:visibility="@{TextUtils.isEmpty(gitDetails.language) ? View.GONE : View.VISIBLE}" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:maxWidth="90dp"
+                        android:text="@{gitDetails.language}"
+                        android:textSize="13sp"
+                        android:visibility="@{TextUtils.isEmpty(gitDetails.language) ? View.GONE : View.VISIBLE}" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:background="@drawable/star"
+                        android:contentDescription="@null" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@{String.valueOf(gitDetails.stars)}"
+                        android:textSize="13sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:background="@drawable/fork"
+                        android:contentDescription="@null" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@{String.valueOf(gitDetails.forks)}"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/light_grey"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

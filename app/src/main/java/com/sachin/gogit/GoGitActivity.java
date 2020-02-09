@@ -4,9 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.sachin.gogit.base.GoGitBaseActivity;
 import com.sachin.gogit.ui.main.GoGitRepositoryFragment;
 
-public class GoGitActivity extends AppCompatActivity {
+public class GoGitActivity extends GoGitBaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
