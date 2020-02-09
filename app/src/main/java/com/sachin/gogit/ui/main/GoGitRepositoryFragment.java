@@ -1,5 +1,6 @@
 package com.sachin.gogit.ui.main;
 
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
@@ -12,15 +13,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.sachin.gogit.GoGitApplication;
 import com.sachin.gogit.R;
 import com.sachin.gogit.base.GoGitBaseFragment;
 
-public class GoGitRepositoryFragment extends GoGitBaseFragment {
+import javax.inject.Inject;
 
+public class GoGitRepositoryFragment extends GoGitBaseFragment {
+    @Inject
+    ViewModelProvider.Factory viewModelFactory;
     private GoGitRepositoryViewModel mViewModel;
 
     public static GoGitRepositoryFragment newInstance() {
         return new GoGitRepositoryFragment();
+    }
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        GoGitApplication.getApplication().getApplicationComponent().inject(this);
     }
 
     @Nullable
@@ -33,7 +46,7 @@ public class GoGitRepositoryFragment extends GoGitBaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(GoGitRepositoryViewModel.class);
+        mViewModel = ViewModelProviders.of(this, viewModelFactory).get(GoGitRepositoryViewModel.class);
         // TODO: Use the ViewModel
     }
 
