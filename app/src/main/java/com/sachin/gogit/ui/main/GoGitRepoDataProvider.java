@@ -43,7 +43,7 @@ public class GoGitRepoDataProvider {
         List<GitTopRepositoryDetails> gitCachedDetailList = databaseManager.getCachedGitTopRepoDetailList();
         //If there is no cached data or if cache time expired, then download new data from server
         if (gitCachedDetailList == null || gitCachedDetailList.isEmpty() || cacheHandler.isCacheTimeExpired()) {
-            GoGitApplication.getApplication().clearGlideCacheMemory();
+            if (GoGitApplication.getApplication() != null) GoGitApplication.getApplication().clearGlideCacheMemory();
             downloadTopGitRepoFromServer(false);
         } else {
             loadGitTopRepoDetails(gitCachedDetailList);
