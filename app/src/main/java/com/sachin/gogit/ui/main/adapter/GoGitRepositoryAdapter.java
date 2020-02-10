@@ -72,5 +72,4 @@ public class GoGitRepositoryAdapter extends RecyclerView.Adapter<GoGitRepository
         return -1;
     }
 
-
 }
